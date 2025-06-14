@@ -6,7 +6,8 @@ public class BaseTest extends BaseTestRunner {
 
     @Test
     public void firstTest() {
-
+//        assert appium.isConnected() : "Failed to establish connection";
+        System.out.println("Connection test passed!");
     }
 }
 

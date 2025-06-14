@@ -1,9 +1,8 @@
-package com.coffeecart.utils;
+package com.googleKeep.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
 import java.util.Properties;
 
 public class TestValueProvider {
@@ -20,34 +19,51 @@ public class TestValueProvider {
         }
     }
 
-    private static List<String> stringToList(String input) {
-        List<String> result = new ArrayList<>();
-        if (input == null || input.isEmpty()) {
-            return result;
+    private String getRequiredConfigValue(String propertyKey, String envKey) {
+        String value = properties != null
+                ? properties.getProperty(propertyKey)
+                : System.getenv(envKey);
+
+        if (value == null || value.trim().isEmpty()) {
+            throw new RuntimeException(
+                    String.format("Required configuration missing! Property: '%s' or Env: '%s'",
+                            propertyKey, envKey)
+            );
         }
-
-        String[] parts = input.split(", ");
-        for (String part : parts) {
-            result.add(part.trim()); // Trim to remove leading/trailing spaces
-        }
-
-        return result;
+        return value;
     }
 
-    public String getBaseUIUrl() {
-        return properties != null ? properties.getProperty("base.ui.url") : System.getenv("BASE_UI_URL");
+    // Методи для кожного параметра
+    public Duration getImplicitlyWait() {
+        return Duration.ofSeconds(Long.parseLong(getRequiredConfigValue("implicitlyWait", "IMPLICITLY_WAIT")));
     }
 
-    public int getImplicitlyWait() {
-        return properties != null ? Integer.parseInt(properties.getProperty("implicitlyWait")) : Integer.parseInt(System.getenv("IMPLICITLY_WAIT"));
+    public String getAppiumServerURL() {
+        return getRequiredConfigValue("appiumServerURL", "APPIUM_SERVER_URL");
     }
 
-    public String getUserEmail() {
-        return properties != null ? properties.getProperty("user.email") : System.getenv("USER_EMAIL");
+    public String getPlatformName() {
+        return getRequiredConfigValue("platformName", "PLATFORM_NAME");
     }
 
-    public String getUserName() {
-        return properties != null ? properties.getProperty("user.name") : System.getenv("USER_NAME");
+    public String getPlatformVersion() {
+        return getRequiredConfigValue("platformVersion", "PLATFORM_VERSION");
     }
 
+    public String getDeviceName() {
+        return getRequiredConfigValue("deviceName", "DEVICE_NAME");
+    }
+
+    public String getAutomationName() {
+        return getRequiredConfigValue("automationName", "AUTOMATION_NAME");
+    }
+
+    public String getAppPackage() {
+        return getRequiredConfigValue("appPackage", "APP_PACKAGE");
+    }
+
+    public String getAppActivity() {
+        return getRequiredConfigValue("appActivity", "APP_ACTIVITY");
+    }
 }
+
