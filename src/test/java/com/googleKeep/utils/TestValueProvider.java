@@ -33,7 +33,6 @@ public class TestValueProvider {
         return value;
     }
 
-    // Методи для кожного параметра
     public Duration getImplicitlyWait() {
         return Duration.ofSeconds(Long.parseLong(getRequiredConfigValue("implicitlyWait", "IMPLICITLY_WAIT")));
     }
