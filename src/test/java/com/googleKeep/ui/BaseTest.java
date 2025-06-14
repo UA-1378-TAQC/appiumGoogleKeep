@@ -1,16 +1,11 @@
-package com.coffeecart.ui;
-
-
-import com.coffeecart.ui.testrunners.BaseTestRunner;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
+package com.googleKeep.ui;
+import org.testng.annotations.*;
+import com.googleKeep.ui.testrunners.BaseTestRunner;
 
 public class BaseTest extends BaseTestRunner {
-    SoftAssert softAssert = new SoftAssert();
+
     @Test
     public void firstTest() {
-
 
     }
 }
