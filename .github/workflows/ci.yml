@@ -43,9 +43,11 @@ jobs:
       - name: Notify Discord on PR Build Started
         if: github.event_name == 'pull_request'
         run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
           curl -H "Content-Type: application/json" \
             -X POST \
-            -d "{\"content\": \"⚙️ Build started for PR: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }})\"}" \
+            -d "{\"content\": \"⚙️ Build started for PR: [$PR_TITLE]($PR_URL)\"}" \
             ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
 
       - name: Notify Discord on Push Build Started
