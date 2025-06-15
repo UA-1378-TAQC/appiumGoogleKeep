@@ -1,12 +1,3 @@
-name: Java CI Build with Discord Notifications
-
-on:
-  push:
-    branches: [main, dev]
-  pull_request:
-    branches: [main, dev]
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,16 +23,26 @@ jobs:
       - name: Build with Maven (skip tests)
         run: mvn clean install -DskipTests --batch-mode --no-transfer-progress
 
-      - name: Notify Discord on Push or PR
+      - name: Notify Discord on Pull Request
+        if: github.event_name == 'pull_request'
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d "{\"content\": \"📣 New Pull Request created: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) by ${{ github.actor }}\"}" \
-              ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
-          else
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d "{\"content\": \"✅ Build successful on branch ${{ github.ref_name }} by ${{ github.actor }}. Commit: ${{ github.sha }}\"}" \
-              ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
-          fi
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"📣 New Pull Request created: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) by ${{ github.actor }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Notify Discord on Push Build Success
+        if: github.event_name == 'push' && success()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"✅ Build successful on branch ${{ github.ref_name }} by ${{ github.actor }}. Commit: ${{ github.sha }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Notify Discord on Push Build Failure
+        if: github.event_name == 'push' && failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"❌ Build failed on branch ${{ github.ref_name }} by ${{ github.actor }}. Commit: ${{ github.sha }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
