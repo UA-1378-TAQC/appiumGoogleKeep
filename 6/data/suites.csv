@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1","createAndVerifyListNoteTest","Surefire suite","Sun Jun 15 18:26:31 GMT 2025","broken","Sun Jun 15 18:26:31 GMT 2025","com.googleKeep.ui.CreateListNoteTest","Surefire test","com.googleKeep.ui.CreateListNoteTest","createAndVerifyListNoteTest"
+"","4","firstTest","Surefire suite","Sun Jun 15 18:26:31 GMT 2025","failed","Sun Jun 15 18:26:31 GMT 2025","com.googleKeep.ui.BaseTest","Surefire test","com.googleKeep.ui.BaseTest","firstTest"
+"","23","createTextNoteTest","Surefire suite","Sun Jun 15 18:26:31 GMT 2025","broken","Sun Jun 15 18:26:31 GMT 2025","com.googleKeep.ui.CreateTextNoteTest","Surefire test","com.googleKeep.ui.CreateTextNoteTest","createTextNoteTest"
+"","1","testLoginSuccess","Surefire suite","Sun Jun 15 18:26:31 GMT 2025","broken","Sun Jun 15 18:26:31 GMT 2025","com.googleKeep.ui.BaseTest","Surefire test","com.googleKeep.ui.BaseTest","testLoginSuccess"
