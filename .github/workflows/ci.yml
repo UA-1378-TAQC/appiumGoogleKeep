@@ -30,9 +30,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      # ---- Build and Notify for Pull Requests ----
       - name: Notify Discord on PR Created or Updated
         if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')
-        id: pr_notification
+        id: pr_notification_created_or_updated
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
           PR_URL="${{ github.event.pull_request.html_url }}"
@@ -41,6 +42,12 @@ jobs:
             -X POST \
             -d "{\"content\": \"📣 Pull Request [$PR_TITLE]($PR_URL) created or updated by $ACTOR\"}" \
             ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+
+      - name: Build with Maven (skip tests) for PR
+        if: github.event_name == 'pull_request'
+        id: maven_build_pr
+        run: mvn clean install -DskipTests --batch-mode --no-transfer-progress
 
       - name: Notify Discord on PR Build Started
         if: github.event_name == 'pull_request'
@@ -52,13 +59,8 @@ jobs:
             -d "{\"content\": \"⚙️ Build started for PR: [$PR_TITLE](${{ github.event.pull_request.html_url }})\"}" \
             ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
 
-
-      - name: Build with Maven (skip tests)
-        id: maven_build
-        run: mvn clean install -DskipTests --batch-mode --no-transfer-progress
-
       - name: Notify Discord on PR Build Success
-        if: github.event_name == 'pull_request' && steps.maven_build.outcome == 'success'
+        if: github.event_name == 'pull_request' && steps.maven_build_pr.outcome == 'success'
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
           curl -H "Content-Type: application/json" \
@@ -67,7 +69,7 @@ jobs:
             ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
 
       - name: Notify Discord on PR Build Failure
-        if: github.event_name == 'pull_request' && steps.maven_build.outcome != 'success'
+        if: github.event_name == 'pull_request' && steps.maven_build_pr.outcome != 'success'
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
           curl -H "Content-Type: application/json" \
@@ -76,7 +78,12 @@ jobs:
             ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
 
 
-      # ---- PUSH NOTIFICATIONS ----
+      # ---- Build and Notify for Push ----
+      - name: Build with Maven (skip tests) for Push
+        if: github.event_name == 'push'
+        id: maven_build_push
+        run: mvn clean install -DskipTests --batch-mode --no-transfer-progress
+
       - name: Notify Discord on Push Build Started
         if: github.event_name == 'push'
         id: push_build_start
@@ -88,7 +95,7 @@ jobs:
             ${{ secrets.DISCORD_WEBHOOK_PUSH }}
 
       - name: Notify Discord on Push Build Success
-        if: github.event_name == 'push' && steps.maven_build.outcome == 'success'
+        if: github.event_name == 'push' && steps.maven_build_push.outcome == 'success'
         run: |
           BRANCH="${{ github.ref_name }}"
           curl -H "Content-Type: application/json" \
@@ -97,7 +104,7 @@ jobs:
             ${{ secrets.DISCORD_WEBHOOK_PUSH }}
 
       - name: Notify Discord on Push Build Failure
-        if: github.event_name == 'push' && steps.maven_build.outcome != 'success'
+        if: github.event_name == 'push' && steps.maven_build_push.outcome != 'success'
         run: |
           BRANCH="${{ github.ref_name }}"
           curl -H "Content-Type: application/json" \
