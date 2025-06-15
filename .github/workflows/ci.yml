@@ -9,9 +9,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  notify-pr-info:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send PR creation/update message to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"📣 Pull Request [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) created or updated by ${{ github.actor }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
   build:
     runs-on: ubuntu-latest
-
+    needs: [notify-pr-info]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,14 +44,6 @@ jobs:
       - name: Build with Maven (skip tests)
         run: mvn clean install -DskipTests --batch-mode --no-transfer-progress
 
-      - name: Notify Discord on Pull Request
-        if: github.event_name == 'pull_request'
-        run: |
-          curl -H "Content-Type: application/json" \
-            -X POST \
-            -d "{\"content\": \"📣 New Pull Request created: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) by ${{ github.actor }}\"}" \
-            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
-
       - name: Notify Discord on Push Build Success
         if: github.event_name == 'push' && success()
         run: |
@@ -55,4 +58,20 @@ jobs:
           curl -H "Content-Type: application/json" \
             -X POST \
             -d "{\"content\": \"❌ Build failed on branch ${{ github.ref_name }} by ${{ github.actor }}. Commit: ${{ github.sha }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Notify Discord on PR Build Success
+        if: github.event_name == 'pull_request' && success()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"✅ PR build passed for [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) by ${{ github.actor }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Notify Discord on PR Build Failure
+        if: github.event_name == 'pull_request' && failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"❌ PR build failed for [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) by ${{ github.actor }}\"}" \
             ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
