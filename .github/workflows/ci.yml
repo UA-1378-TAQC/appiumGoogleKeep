@@ -1,15 +1,18 @@
 name: Java CI Build with Discord Notifications
 
 on:
-  push:
-    branches: [main, dev]
   pull_request:
+    types: [opened, reopened, synchronize]
+    branches: [main, dev]
+  push:
     branches: [main, dev]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.set-result.outputs.result }}
 
     steps:
       - name: Checkout repository
@@ -29,19 +32,82 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Notify Discord on PR Created or Updated
+        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize')
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"📣 Pull Request [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) created or updated by ${{ github.actor }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Notify Discord on PR Build Started
+        if: github.event_name == 'pull_request'
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"⚙️ Build started for PR: [$PR_TITLE]($PR_URL)\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Notify Discord on Push Build Started
+        if: github.event_name == 'push'
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"⚙️ Build started on branch ${{ github.ref_name }} by ${{ github.actor }}. Commit: ${{ github.sha }}\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PUSH }}
+
       - name: Build with Maven (skip tests)
+        id: maven
         run: mvn clean install -DskipTests --batch-mode --no-transfer-progress
 
-      - name: Notify Discord on Push or PR
+      - name: Set Build Result Output
+        id: set-result
+        run: echo "result=success" >> $GITHUB_OUTPUT
+        if: success()
+
+      - name: Set Build Result as Failure
+        if: failure()
+        run: echo "result=failure" >> $GITHUB_OUTPUT
+        id: set-failure-result
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+
+    steps:
+      - name: Send PR Build Result to Discord
+        if: github.event_name == 'pull_request'
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d "{\"content\": \"📣 New Pull Request created: [${{ github.event.pull_request.title }}](${{ github.event.pull_request.html_url }}) by ${{ github.actor }}\"}" \
-              ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+          RESULT="${{ needs.build.outputs.result }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          ACTOR="${{ github.actor }}"
+          if [ "$RESULT" == "success" ]; then
+            MESSAGE="✅ PR build passed for [$PR_TITLE]($PR_URL) by $ACTOR"
           else
-            curl -H "Content-Type: application/json" \
-              -X POST \
-              -d "{\"content\": \"✅ Build successful on branch ${{ github.ref_name }} by ${{ github.actor }}. Commit: ${{ github.sha }}\"}" \
-              ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+            MESSAGE="❌ PR build failed for [$PR_TITLE]($PR_URL) by $ACTOR"
           fi
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"$MESSAGE\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PULL_REQUEST }}
+
+      - name: Send Push Build Result to Discord
+        if: github.event_name == 'push'
+        run: |
+          RESULT="${{ needs.build.outputs.result }}"
+          BRANCH="${{ github.ref_name }}"
+          ACTOR="${{ github.actor }}"
+          COMMIT="${{ github.sha }}"
+          if [ "$RESULT" == "success" ]; then
+            MESSAGE="✅ Build successful on branch $BRANCH by $ACTOR. Commit: $COMMIT"
+          else
+            MESSAGE="❌ Build failed on branch $BRANCH by $ACTOR. Commit: $COMMIT"
+          fi
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d "{\"content\": \"$MESSAGE\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_PUSH }}
