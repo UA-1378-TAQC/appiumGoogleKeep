@@ -15,6 +15,7 @@ public class BaseTest extends BaseTestRunner {
     public void testLoginSuccess() {
         KeepNotePage loginPage = new KeepNotePage(driver);
         loginPage.skipWelcome();
-        loginPage.clickAdd();
+        loginPage.tapAddButton();
+
     }
 }
