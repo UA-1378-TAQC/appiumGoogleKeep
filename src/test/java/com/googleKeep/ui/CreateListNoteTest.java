@@ -11,11 +11,8 @@ public class CreateListNoteTest extends BaseTestRunner {
     @Test
     public void createAndVerifyListNoteTest() {
         KeepNotePage keep = new KeepNotePage(driver);
-
-        keep.skipWelcome()
-                .tapCancelButton()
-                .tapAddButton()
-                .createListNote();
+        keep.tapAddButton()
+            .createListNote();
     }
 
 }

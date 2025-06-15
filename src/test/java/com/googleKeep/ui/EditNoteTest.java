@@ -11,12 +11,10 @@ public class EditNoteTest extends BaseTestRunner {
         KeepNotePage keep = new KeepNotePage(driver);
         String title = "ExistingNoteTitle";
         String newTitle = "ExistingNoteTitle — Edited";
-        keep.skipWelcome()
-                .tapCancelButton()
-                .tapAddButton()
-                .createTextNote()
-                .enterTitle(title)
-                .saveNote();
+        keep.tapAddButton()
+            .createTextNote()
+            .enterTitle(title)
+            .saveNote();
 
         keep.waitForNoteToAppear(title, 3);
         keep.findNotesTitle(title);
