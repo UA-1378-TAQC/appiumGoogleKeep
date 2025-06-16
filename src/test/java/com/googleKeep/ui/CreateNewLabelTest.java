@@ -9,14 +9,13 @@ public class CreateNewLabelTest extends BaseTestRunner {
     @Test
     public void createTextNoteTest() {
         MainPage keep = new MainPage(driver);
-        keep.tapMenuBurgerButton()
+        boolean isLabelFound = keep.tapMenuBurgerButton()
                 .openBurgerButtonModal()//questionable
                 .tapCreateNewLabelButton()
                 .enterNewLabelName("NewTestLabel")
-                .clickSubmit();
+                .clickSubmit().isLabelCreated("NewTestLabel");
 
-
-
-        //Assert.assertTrue(keep.isNoteDisplayed(newTitle), "Note with title not found!");
+        Assert.assertTrue(isLabelFound, "Label with title not found!");
     }
+
 }

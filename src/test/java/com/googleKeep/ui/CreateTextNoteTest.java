@@ -6,7 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CreateTextNoteTest extends BaseTestRunner {
-
     @Test
     public void createTextNoteTest() {
         MainPage keep = new MainPage(driver);
@@ -20,4 +19,5 @@ public class CreateTextNoteTest extends BaseTestRunner {
 
         Assert.assertTrue(keep.isNoteDisplayed(title), "Note with title not found!");
     }
+
 }

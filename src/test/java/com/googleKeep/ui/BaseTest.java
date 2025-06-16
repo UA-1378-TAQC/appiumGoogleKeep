@@ -8,6 +8,7 @@ public class BaseTest extends BaseTestRunner {
 
     @Test
     public void firstTest() {
+        //checks weather this project can connect to your device
         Assert.assertNotNull(driver, "Driver should be initialized");
     }
 

@@ -22,4 +22,5 @@ public class EditNoteTest extends BaseTestRunner {
 
         Assert.assertTrue(keep.isNoteDisplayed(newTitle), "Note with title not found!");
     }
+
 }

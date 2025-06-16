@@ -14,6 +14,7 @@ public class PlusButtonComponent extends Base {
     public PlusButtonComponent(AppiumDriver webDriver) {
         super(webDriver);
     }
+
     public PlusButtonComponent tapAddButton() {
         driver.findElement(plusButton).click();
         return this;

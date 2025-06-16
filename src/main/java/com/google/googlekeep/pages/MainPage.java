@@ -59,11 +59,11 @@ public class MainPage extends BaseNotePage {
     }
 
     public boolean isNoteDisplayed(String titleText) {
-        return driver.findElements(By.xpath("//android.widget.TextView[@text='" + titleText + "']")).size() > 0;
+        return !driver.findElements(By.xpath("//android.widget.TextView[@text='" + titleText + "']")).isEmpty();
     }
 
-    public HeaderEditorToolbarComponent tapMenuBurgerButton(){
-      return headerEditorToolbarComponent;
+    public HeaderEditorToolbarComponent tapMenuBurgerButton() {
+        return headerEditorToolbarComponent;
     }
 
 }

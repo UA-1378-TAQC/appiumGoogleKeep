@@ -19,10 +19,6 @@ public abstract class BaseNotePage extends Base {
         super(webDriver);
     }
 
-    public BaseNotePage tapOutside() {
-        return this;
-    }
-
     public BaseNotePage saveNote() {
         waitFor(backButton);
         driver.findElement(backButton).click();

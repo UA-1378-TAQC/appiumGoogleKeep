@@ -13,7 +13,6 @@ import org.testng.annotations.BeforeSuite;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 public class BaseTestRunner {
     protected AppiumDriver driver;
     protected MainPage keep;
@@ -49,12 +48,10 @@ public class BaseTestRunner {
 
     @Step("init AppiumDriver")
     public void initDriver(String platform) {
-        switch (platform.toLowerCase()) {
-            case "android":
-                connectToAndroid();
-                break;
-            default:
-                System.err.println("❌ Unsupported platform: " + platform);
+        if (platform.equalsIgnoreCase("android")) {
+            connectToAndroid();
+        } else {
+            System.err.println("❌ Unsupported platform: " + platform);
         }
     }
 
@@ -86,4 +83,5 @@ public class BaseTestRunner {
         keep.skipWelcome()
                 .tapCancelButton();
     }
+
 }
