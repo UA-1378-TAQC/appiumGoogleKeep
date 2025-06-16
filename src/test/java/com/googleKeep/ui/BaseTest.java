@@ -11,10 +11,4 @@ public class BaseTest extends BaseTestRunner {
         Assert.assertNotNull(driver, "Driver should be initialized");
     }
 
-    @Test
-    public void testLoginSuccess() {
-        MainPage loginPage = new MainPage(driver);
-        loginPage.skipWelcome();
-
-    }
 }

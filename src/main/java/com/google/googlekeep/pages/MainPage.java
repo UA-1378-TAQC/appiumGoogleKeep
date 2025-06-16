@@ -59,6 +59,4 @@ public class MainPage extends BaseNotePage {
         return driver.findElements(By.xpath("//android.widget.TextView[@text='" + titleText + "']")).size() > 0;
     }
 
-
 }
-
