@@ -1,11 +1,13 @@
 package com.googleKeep.ui.testrunners;
 
+import com.google.googlekeep.pages.KeepNotePage;
 import com.googleKeep.utils.TestValueProvider;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.net.MalformedURLException;
@@ -14,6 +16,7 @@ import java.net.URL;
 
 public class BaseTestRunner {
     protected AppiumDriver driver;
+    protected KeepNotePage keep;
     protected TestValueProvider testValueProvider = new TestValueProvider();
 
     public void connectToAndroid() {
@@ -75,5 +78,12 @@ public class BaseTestRunner {
         } else {
             System.out.println("⚠️ No active connection to disconnect");
         }
+    }
+
+    @BeforeMethod
+    public void commonSetup() {
+        keep = new KeepNotePage(driver);
+        keep.skipWelcome()
+                .tapCancelButton();
     }
 }

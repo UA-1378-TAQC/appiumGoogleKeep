@@ -5,19 +5,21 @@ import com.googleKeep.ui.testrunners.BaseTestRunner;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CreateTextNoteTest extends BaseTestRunner {
-
+public class EditNoteTest extends BaseTestRunner {
     @Test
     public void createTextNoteTest() {
         KeepNotePage keep = new KeepNotePage(driver);
-        String title = "Test Note Title";
-        String body = "This is a test note body.";
+        String title = "ExistingNoteTitle";
+        String newTitle = "ExistingNoteTitle — Edited";
         keep.tapAddButton()
             .createTextNote()
             .enterTitle(title)
-            .enterBody(body)
             .saveNote();
 
-        Assert.assertTrue(keep.isNoteDisplayed(title), "Note with title not found!");
+        keep.waitForNoteToAppear(title, 3);
+        keep.findNotesTitle(title);
+        keep.enterTitle(newTitle).saveNote();
+
+        Assert.assertTrue(keep.isNoteDisplayed(newTitle), "Note with title not found!");
     }
 }
