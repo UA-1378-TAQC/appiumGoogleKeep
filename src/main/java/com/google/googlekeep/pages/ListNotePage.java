@@ -33,24 +33,6 @@ public class ListNotePage extends BaseNotePage {
         return this;
     }
 
-    public ListNotePage toggleCheckboxForItem(int itemIndex) {
-        List<WebElement> checkboxes = driver.findElements(checklistCheckboxes);
-        if (itemIndex < checkboxes.size()) {
-            checkboxes.get(itemIndex).click();
-        }
-        return this;
-    }
-
-    public boolean isItemChecked(int itemIndex) {
-        List<WebElement> checkboxes = driver.findElements(checklistCheckboxes);
-        if (itemIndex < checkboxes.size()) {
-            WebElement checkbox = checkboxes.get(itemIndex);
-            String checked = checkbox.getAttribute("checked");
-            return "true".equals(checked);
-        }
-        return false;
-    }
-
     public int getItemCount() {
         return driver.findElements(allListItems).size();
     }
