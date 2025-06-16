@@ -28,13 +28,4 @@ public abstract class Base {
         waitFor(locator).click();
     }
 
-    protected void type(By locator, String text) {
-        WebElement element = waitFor(locator);
-        element.clear();
-        element.sendKeys(text);
-    }
-
-    protected String getText(By locator) {
-        return waitFor(locator).getText();
-    }
 }

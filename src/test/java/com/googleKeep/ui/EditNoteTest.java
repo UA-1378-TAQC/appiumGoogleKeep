@@ -16,7 +16,7 @@ public class EditNoteTest extends BaseTestRunner {
             .enterTitle(title)
             .saveNote();
 
-        keep.waitForNoteToAppear(title, 3);
+        keep.waitForNoteToAppear(title);
         keep.findNotesTitle(title);
         keep.enterTitle(newTitle).saveNote();
 

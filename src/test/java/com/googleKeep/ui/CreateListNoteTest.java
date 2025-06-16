@@ -40,7 +40,7 @@ public class CreateListNoteTest extends BaseTestRunner {
 
         listNotePage.saveNote();
 
-        boolean noteAppeared = mainPage.waitForNoteToAppear(CHECKLIST_TITLE, 10);
+        boolean noteAppeared = mainPage.waitForNoteToAppear(CHECKLIST_TITLE);
         softAssert.assertTrue(noteAppeared,
                 "Note should appear in main list after saving");
 

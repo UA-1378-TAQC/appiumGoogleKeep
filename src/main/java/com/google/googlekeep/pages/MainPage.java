@@ -5,15 +5,12 @@ import com.google.googlekeep.components.SearchInputComponent;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 public class MainPage extends BaseNotePage {
     private final AppiumDriver driver;
-    private PlusButtonComponent plusButton;
+    private final PlusButtonComponent plusButton;
     private SearchInputComponent searchInput;
 
     private final By cancelButton = By.id("android:id/button2");
@@ -39,10 +36,9 @@ public class MainPage extends BaseNotePage {
                 .ifPresent(WebElement::click);
     }
 
-    public boolean waitForNoteToAppear(String titleText, int timeoutSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+    public boolean waitForNoteToAppear(String titleText) {
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + titleText + "']")));
+            waitFor(By.xpath("//android.widget.TextView[@text='" + titleText + "']"));
             return true;
         } catch (Exception e) {
             return false;
@@ -58,7 +54,6 @@ public class MainPage extends BaseNotePage {
         driver.findElement(cancelButton).click();
         return this;
     }
-
 
     public boolean isNoteDisplayed(String titleText) {
         return driver.findElements(By.xpath("//android.widget.TextView[@text='" + titleText + "']")).size() > 0;
