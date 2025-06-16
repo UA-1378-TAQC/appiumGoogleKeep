@@ -1,5 +1,6 @@
 package com.google.googlekeep.pages;
 
+import com.google.googlekeep.components.HeaderEditorToolbarComponent;
 import com.google.googlekeep.components.PlusButtonComponent;
 import com.google.googlekeep.components.SearchInputComponent;
 import io.appium.java_client.AppiumDriver;
@@ -12,6 +13,7 @@ public class MainPage extends BaseNotePage {
     private final AppiumDriver driver;
     private final PlusButtonComponent plusButton;
     private SearchInputComponent searchInput;
+    private final HeaderEditorToolbarComponent headerEditorToolbarComponent;
 
     private final By cancelButton = By.id("android:id/button2");
     private final By listOfNotesTitle = By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_title']");
@@ -21,6 +23,7 @@ public class MainPage extends BaseNotePage {
         super(driver);
         this.driver = driver;
         plusButton = new PlusButtonComponent(driver);
+        headerEditorToolbarComponent = new HeaderEditorToolbarComponent(driver);
     }
 
     public PlusButtonComponent tapAddButtonOnMain() {
@@ -57,6 +60,10 @@ public class MainPage extends BaseNotePage {
 
     public boolean isNoteDisplayed(String titleText) {
         return driver.findElements(By.xpath("//android.widget.TextView[@text='" + titleText + "']")).size() > 0;
+    }
+
+    public HeaderEditorToolbarComponent tapMenuBurgerButton(){
+      return headerEditorToolbarComponent;
     }
 
 }
