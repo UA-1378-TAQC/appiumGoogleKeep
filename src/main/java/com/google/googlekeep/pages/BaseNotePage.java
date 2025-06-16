@@ -3,8 +3,12 @@ package com.google.googlekeep.pages;
 import com.google.googlekeep.Base;
 import com.google.googlekeep.components.FooterEditorToolbarComponent;
 import com.google.googlekeep.components.HeaderEditorToolbarComponent;
+import com.google.googlekeep.utils.TextUtil;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public abstract class BaseNotePage extends Base {
 
@@ -31,7 +35,18 @@ public abstract class BaseNotePage extends Base {
     }
 
     public BaseNotePage enterBody(String body) {
-        driver.findElement(bodyField).sendKeys(body);
+        AndroidDriver driver = (AndroidDriver) this.driver;
+        WebElement input = driver.findElement(bodyField);
+        input.click();
+
+        AndroidDriver androidDriver = (AndroidDriver) driver;
+
+        for (char c : body.toCharArray()) {
+            if (Character.isLetterOrDigit(c) || c == ' ') {
+                androidDriver.pressKey(new KeyEvent(TextUtil.getAndroidKey(c)));
+            }
+        }
+
         return this;
     }
 
