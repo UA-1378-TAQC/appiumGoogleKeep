@@ -1,6 +1,6 @@
 package com.googleKeep.ui.testrunners;
 
-import com.google.googlekeep.pages.KeepNotePage;
+import com.google.googlekeep.pages.MainPage;
 import com.googleKeep.utils.TestValueProvider;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -16,7 +16,7 @@ import java.net.URL;
 
 public class BaseTestRunner {
     protected AppiumDriver driver;
-    protected KeepNotePage keep;
+    protected MainPage keep;
     protected TestValueProvider testValueProvider = new TestValueProvider();
 
     public void connectToAndroid() {
@@ -82,7 +82,7 @@ public class BaseTestRunner {
 
     @BeforeMethod
     public void commonSetup() {
-        keep = new KeepNotePage(driver);
+        keep = new MainPage(driver);
         keep.skipWelcome()
                 .tapCancelButton();
     }

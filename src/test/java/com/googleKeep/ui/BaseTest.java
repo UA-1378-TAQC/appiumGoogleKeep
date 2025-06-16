@@ -1,5 +1,5 @@
 package com.googleKeep.ui;
-import com.google.googlekeep.pages.KeepNotePage;
+import com.google.googlekeep.pages.MainPage;
 import org.testng.annotations.*;
 import com.googleKeep.ui.testrunners.BaseTestRunner;
 import org.testng.Assert;
@@ -13,9 +13,8 @@ public class BaseTest extends BaseTestRunner {
 
     @Test
     public void testLoginSuccess() {
-        KeepNotePage loginPage = new KeepNotePage(driver);
+        MainPage loginPage = new MainPage(driver);
         loginPage.skipWelcome();
-        loginPage.tapAddButton();
 
     }
 }
