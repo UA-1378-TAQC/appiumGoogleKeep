@@ -8,10 +8,10 @@ import org.testng.annotations.Test;
 public class EditNoteTest extends BaseTestRunner {
     @Test
     public void createTextNoteTest() {
-/*        MainPage keep = new MainPage(driver);
+        MainPage keep = new MainPage(driver);
         String title = "ExistingNoteTitle";
         String newTitle = "ExistingNoteTitle — Edited";
-        keep.tapAddButton()
+        keep.tapAddButtonOnMain()
             .createTextNote()
             .enterTitle(title)
             .saveNote();
@@ -20,6 +20,6 @@ public class EditNoteTest extends BaseTestRunner {
         keep.findNotesTitle(title);
         keep.enterTitle(newTitle).saveNote();
 
-        Assert.assertTrue(keep.isNoteDisplayed(newTitle), "Note with title not found!");*/
+        Assert.assertTrue(keep.isNoteDisplayed(newTitle), "Note with title not found!");
     }
 }
