@@ -7,28 +7,37 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CreateListNoteTest extends BaseTestRunner {
-    private static final String CHECKLIST_TITLE = "Shopping List";
-    private static final String[] CHECKLIST_ITEMS = {"Milk", "Bread", "Eggs"};
 
-    @Test
-    public void createAndVerifyListNoteTest() {
-/*        MainPage keep = new MainPage(driver);
-        ListNotePage list = new ListNotePage(driver);
+        private static final String CHECKLIST_TITLE = "Shopping List";
+        private static final String[] CHECKLIST_ITEMS = {"Milk", "Bread", "Eggs"};
 
-        keep.tapAddButton()
-                .createListNote()
-                .enterTitle(CHECKLIST_TITLE);
+        @Test
+        public void createAndVerifyListNoteTest() {
+            MainPage mainPage = new MainPage(driver);
 
-        for (String item : CHECKLIST_ITEMS) {
-            list.enterListItem(item);
-            list.addListItem();
+            ListNotePage listNotePage = mainPage.tapAddButtonOnMain()
+                    .createListNote();
+
+            listNotePage.enterTitle(CHECKLIST_TITLE);
+
+            for (int i = 0; i < CHECKLIST_ITEMS.length; i++) {
+                listNotePage.enterListItem(CHECKLIST_ITEMS[i]);
+                if (i < CHECKLIST_ITEMS.length - 1) {
+                    listNotePage.addListItem();
+                }
+            }
+
+            listNotePage.saveNote();
+
+            Assert.assertTrue(mainPage.waitForNoteToAppear(CHECKLIST_TITLE, 5),
+                    "Note should appear in the main list within 5 seconds");
+
+            Assert.assertTrue(mainPage.isNoteDisplayed(CHECKLIST_TITLE),
+                    "Note with title '" + CHECKLIST_TITLE + "' should be displayed in main list");
+
+            mainPage.findNotesTitle(CHECKLIST_TITLE);
+
+
         }
-
-        keep.saveNote();
-        keep.waitForNoteToAppear(CHECKLIST_TITLE, 3);
-        keep.findNotesTitle(CHECKLIST_TITLE);
-        Assert.assertTrue(keep.isNoteDisplayed(CHECKLIST_TITLE), "Note with title not found!");*/
-    }
-
 
 }
