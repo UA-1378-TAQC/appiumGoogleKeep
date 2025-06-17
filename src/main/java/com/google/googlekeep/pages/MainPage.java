@@ -54,7 +54,10 @@ public class MainPage extends BaseNotePage {
     }
 
     public MainPage tapCancelButton() {
-        driver.findElement(cancelButton).click();
+        List<WebElement> elements = driver.findElements(cancelButton);
+        if (!elements.isEmpty()) {
+            elements.get(0).click();
+        }
         return this;
     }
 
@@ -64,6 +67,12 @@ public class MainPage extends BaseNotePage {
 
     public HeaderEditorToolbarComponent tapMenuBurgerButton() {
         return headerEditorToolbarComponent;
+    }
+
+    public boolean isNoteBodyDisplayed(String bodyText) {
+        return !driver.findElements(
+                By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_text_description' and  @text='" + bodyText + "']")
+        ).isEmpty();
     }
 
 }
