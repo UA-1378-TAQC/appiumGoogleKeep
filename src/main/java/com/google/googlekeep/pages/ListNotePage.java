@@ -18,7 +18,7 @@ public class ListNotePage extends BaseNotePage {
     }
 
     public ListNotePage addListItem() {
-        click(addListItemButton);
+        tap(addListItemButton);
         return this;
     }
 

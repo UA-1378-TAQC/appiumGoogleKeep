@@ -26,7 +26,7 @@ public abstract class Base {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    protected void click(By locator) {
+    protected void tap(By locator) {
         waitFor(locator).click();
     }
 
