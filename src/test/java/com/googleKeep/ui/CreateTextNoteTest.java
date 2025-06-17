@@ -10,14 +10,15 @@ public class CreateTextNoteTest extends BaseTestRunner {
     public void createTextNoteTest() {
         MainPage keep = new MainPage(driver);
         String title = "Test Note Title";
-        String body = "This is a test note body.";
+        String body = "sample text";
         keep.tapAddButtonOnMain()
-            .createTextNote()
-            .enterTitle(title)
-            .enterBody(body)
-            .saveNote();
+                .createTextNote()
+                .enterTitle(title)
+                .enterBody(body)
+                .saveNote();
 
         Assert.assertTrue(keep.isNoteDisplayed(title), "Note with title not found!");
+        Assert.assertTrue(keep.isNoteBodyDisplayed(body), "Note body not found or not saved!");
     }
 
 }
