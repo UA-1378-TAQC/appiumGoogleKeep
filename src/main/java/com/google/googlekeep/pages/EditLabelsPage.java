@@ -2,6 +2,9 @@ package com.google.googlekeep.pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class EditLabelsPage extends BaseNotePage {
     private final By createNewLabelField = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/input_text\"]");
@@ -22,8 +25,11 @@ public class EditLabelsPage extends BaseNotePage {
         return this;
     }
 
-    public boolean isLabelCreated(String labelName) {
-        return waitUntilTextAppearsInList(listOfLabels, labelName);
+    public List<String> getLabelNames() {
+        return driver.findElements(listOfLabels)
+                .stream()
+                .map(WebElement::getText)
+                .toList();
     }
 
 }
