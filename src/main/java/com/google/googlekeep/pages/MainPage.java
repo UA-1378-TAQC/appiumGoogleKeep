@@ -3,6 +3,7 @@ package com.google.googlekeep.pages;
 import com.google.googlekeep.components.HeaderEditorToolbarComponent;
 import com.google.googlekeep.components.PlusButtonComponent;
 import com.google.googlekeep.components.SearchInputComponent;
+import com.google.googlekeep.modal.SearchModal;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,6 +19,7 @@ public class MainPage extends BaseNotePage {
     private final By cancelButton = By.id("android:id/button2");
     private final By listOfNotesTitle = By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_title']");
     private final By skipWelcomeButton = By.id("com.google.android.keep:id/skip_welcome");
+    private final By searchLabel = By.id("com.google.android.keep:id/open_search_bar_text_view");
 
     public MainPage(AppiumDriver driver) {
         super(driver);
@@ -73,6 +75,11 @@ public class MainPage extends BaseNotePage {
         return !driver.findElements(
                 By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_text_description' and  @text='" + bodyText + "']")
         ).isEmpty();
+    }
+
+    public SearchModal tapSearchLabel(){
+        driver.findElement(searchLabel).click();
+        return new SearchModal(driver);
     }
 
 }

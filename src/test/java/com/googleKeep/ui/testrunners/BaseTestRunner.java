@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 
 public class BaseTestRunner {
     protected AppiumDriver driver;
@@ -28,7 +29,7 @@ public class BaseTestRunner {
                     .setDeviceName(testValueProvider.getDeviceName())
                     .setAutomationName(testValueProvider.getAutomationName())
                     .setAppPackage(testValueProvider.getAppPackage())
-                    .setAppActivity(testValueProvider.getAppActivity());
+                    .setAppActivity(testValueProvider.getAppActivity()).setUiautomator2ServerInstallTimeout(Duration.ofSeconds(60));
 
             String appiumServerURL = testValueProvider.getAppiumServerURL();
             System.out.println("Appium server URL: " + appiumServerURL);
