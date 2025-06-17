@@ -11,7 +11,7 @@ public class CreateNewLabelTest extends BaseTestRunner {
     public void createTextNoteTest() {
         MainPage keep = new MainPage(driver);
         EditLabelsPage labelsPage =keep.tapMenuBurgerButton()
-                .openBurgerButtonModal()//questionable
+                .openBurgerButtonModal()
                 .tapCreateNewLabelButton()
                 .enterNewLabelName("NewTestLabel")
                 .clickSubmit();
