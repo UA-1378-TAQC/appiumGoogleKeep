@@ -42,8 +42,4 @@ public abstract class Base {
         }
     }
 
-    protected boolean waitUntilTextAppearsInList(By locator, String expectedText) {
-        return waitUntilTextAppearsInList(locator, expectedText, 10);
-    }
-
 }

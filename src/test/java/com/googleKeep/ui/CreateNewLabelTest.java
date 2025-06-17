@@ -9,14 +9,15 @@ import org.testng.annotations.Test;
 public class CreateNewLabelTest extends BaseTestRunner {
     @Test
     public void createTextNoteTest() {
+        String LABEL_TEXT = "NewTestLabel";
         MainPage keep = new MainPage(driver);
         EditLabelsPage labelsPage =keep.tapMenuBurgerButton()
                 .openBurgerButtonModal()
                 .tapCreateNewLabelButton()
-                .enterNewLabelName("NewTestLabel")
+                .enterNewLabelName(LABEL_TEXT)
                 .clickSubmit();
 
-        boolean isLabelFound = labelsPage.getLabelNames().contains("NewTestLabel");
+        boolean isLabelFound = labelsPage.waitForLabelToAppear(LABEL_TEXT);
 
         Assert.assertTrue(isLabelFound, "Label with title not found!");
     }

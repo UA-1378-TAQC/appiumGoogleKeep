@@ -4,9 +4,11 @@ import com.google.googlekeep.Base;
 import com.google.googlekeep.utils.TextUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import io.appium.java_client.android.nativekey.KeyEventMetaModifier;
 
 public abstract class BaseNotePage extends Base {
     private final By tapOutside = By.xpath("//android.view.View[@resource-id=\"com.google.android.keep:id/touch_outside\"]");
@@ -39,10 +41,18 @@ public abstract class BaseNotePage extends Base {
         AndroidDriver driver = (AndroidDriver) this.driver;
         for (char c : body.toCharArray()) {
             if (Character.isLetterOrDigit(c) || c == ' ') {
-                driver.pressKey(new KeyEvent(TextUtil.getAndroidKey(c)));
+                AndroidKey key = TextUtil.getAndroidKey(Character.toLowerCase(c));
+                KeyEvent event = new KeyEvent(key);
+
+                if (Character.isUpperCase(c)) {
+                    event = event.withMetaModifier(KeyEventMetaModifier.SHIFT_LEFT_ON);
+                }
+
+                driver.pressKey(event);
             }
         }
         return this;
     }
+
 
 }
