@@ -1,6 +1,9 @@
 package com.google.googlekeep.pages;
 
+import com.google.googlekeep.utils.TextUtil;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -26,8 +29,15 @@ public class ListNotePage extends BaseNotePage {
         List<WebElement> inputs = driver.findElements(listItemInput);
         if (!inputs.isEmpty()) {
             WebElement activeInput = inputs.get(inputs.size() - 1);
-            activeInput.clear();
-            activeInput.sendKeys(itemText);
+            activeInput.click();
+
+            AndroidDriver androidDriver = (AndroidDriver) driver;
+
+            for (char c : itemText.toCharArray()) {
+                if (Character.isLetterOrDigit(c) || c == ' ') {
+                    androidDriver.pressKey(new KeyEvent(TextUtil.getAndroidKey(c)));
+                }
+            }
         }
         return this;
     }

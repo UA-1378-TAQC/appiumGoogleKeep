@@ -24,7 +24,6 @@ public abstract class BaseNotePage extends Base {
     }
 
     public BaseNotePage saveNote() {
-        waitFor(backButton);
         driver.findElement(backButton).click();
         return this;
     }
