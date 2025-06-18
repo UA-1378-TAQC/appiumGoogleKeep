@@ -1,19 +1,21 @@
 package com.googleKeep.ui.testrunners;
 
+import com.google.googlekeep.pages.MainPage;
 import com.googleKeep.utils.TestValueProvider;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
 public class BaseTestRunner {
     protected AppiumDriver driver;
+    protected MainPage keep;
     protected TestValueProvider testValueProvider = new TestValueProvider();
 
     public void connectToAndroid() {
@@ -46,12 +48,10 @@ public class BaseTestRunner {
 
     @Step("init AppiumDriver")
     public void initDriver(String platform) {
-        switch (platform.toLowerCase()) {
-            case "android":
-                connectToAndroid();
-                break;
-            default:
-                System.err.println("❌ Unsupported platform: " + platform);
+        if (platform.equalsIgnoreCase("android")) {
+            connectToAndroid();
+        } else {
+            System.err.println("❌ Unsupported platform: " + platform);
         }
     }
 
@@ -76,4 +76,12 @@ public class BaseTestRunner {
             System.out.println("⚠️ No active connection to disconnect");
         }
     }
+
+    @BeforeMethod
+    public void commonSetup() {
+        keep = new MainPage(driver);
+        keep.skipWelcome()
+                .tapCancelButton();
+    }
+
 }

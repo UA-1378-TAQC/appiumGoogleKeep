@@ -64,5 +64,5 @@ public class TestValueProvider {
     public String getAppActivity() {
         return getRequiredConfigValue("appActivity", "APP_ACTIVITY");
     }
-}
 
+}
