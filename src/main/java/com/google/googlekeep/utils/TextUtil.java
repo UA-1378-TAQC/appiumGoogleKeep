@@ -42,6 +42,21 @@ public class TextUtil {
             case '8' -> AndroidKey.DIGIT_8;
             case '9' -> AndroidKey.DIGIT_9;
             case ' ' -> AndroidKey.SPACE;
+            case ',' -> AndroidKey.COMMA;
+            case '.' -> AndroidKey.PERIOD;
+            case '@' -> AndroidKey.AT;
+            case '#' -> AndroidKey.POUND;
+            case '!' -> AndroidKey.DIGIT_1;
+            case '?' -> AndroidKey.SLASH;
+            case ':' -> AndroidKey.SEMICOLON;
+            case ';' -> AndroidKey.SEMICOLON;
+            case '\'' -> AndroidKey.APOSTROPHE;
+            case '"' -> AndroidKey.APOSTROPHE;
+            case '-' -> AndroidKey.MINUS;
+            case '_' -> AndroidKey.MINUS;
+            case '+' -> AndroidKey.EQUALS;
+            case '/' -> AndroidKey.SLASH;
+            case '\\' -> AndroidKey.BACKSLASH;
             default -> throw new IllegalArgumentException("Unsupported character: " + c);
         };
     }

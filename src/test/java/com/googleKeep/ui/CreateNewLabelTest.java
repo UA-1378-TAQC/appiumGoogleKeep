@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class CreateNewLabelTest extends BaseTestRunner {
     @Test
     public void createTextNoteTest() {
-        String LABEL_TEXT = "NewTestLabel";
+        String LABEL_TEXT = "NewTestLabel!@#_+-";
         MainPage keep = new MainPage(driver);
         EditLabelsPage labelsPage =keep.tapMenuBurgerButton()
                 .openBurgerButtonModal()

@@ -40,18 +40,28 @@ public abstract class BaseNotePage extends Base {
     public BaseNotePage enterText(String body) {
         AndroidDriver driver = (AndroidDriver) this.driver;
         for (char c : body.toCharArray()) {
-            if (Character.isLetterOrDigit(c) || c == ' ') {
-                AndroidKey key = TextUtil.getAndroidKey(Character.toLowerCase(c));
-                KeyEvent event = new KeyEvent(key);
-
-                if (Character.isUpperCase(c)) {
-                    event = event.withMetaModifier(KeyEventMetaModifier.SHIFT_LEFT_ON);
-                }
-
-                driver.pressKey(event);
+            if (!Character.isLetterOrDigit(c) && c != ' ' && !isSupportedSymbol(c)) {
+                continue;
             }
+
+            AndroidKey key = TextUtil.getAndroidKey(c);
+            KeyEvent event = new KeyEvent(key);
+
+            if (requiresShift(c)) {
+                event = event.withMetaModifier(KeyEventMetaModifier.SHIFT_LEFT_ON);
+            }
+
+            driver.pressKey(event);
         }
         return this;
+    }
+
+    private boolean isSupportedSymbol(char c) {
+        return ",.@#!?:;'\"-_+=/\\\\".indexOf(c) >= 0;
+    }
+
+    private boolean requiresShift(char c) {
+        return Character.isUpperCase(c) || "!?:\"_+=@#".indexOf(c) >= 0;
     }
 
 
