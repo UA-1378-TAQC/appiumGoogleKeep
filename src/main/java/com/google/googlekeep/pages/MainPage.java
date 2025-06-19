@@ -1,6 +1,7 @@
 package com.google.googlekeep.pages;
 
 import com.google.googlekeep.components.*;
+import com.google.googlekeep.components.headerMainComponents.SearchInputComponent;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

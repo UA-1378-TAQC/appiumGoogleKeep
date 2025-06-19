@@ -1,4 +1,4 @@
-package com.google.googlekeep.components;
+package com.google.googlekeep.components.headerMainComponents;
 
 import com.google.googlekeep.Base;
 import io.appium.java_client.AppiumDriver;

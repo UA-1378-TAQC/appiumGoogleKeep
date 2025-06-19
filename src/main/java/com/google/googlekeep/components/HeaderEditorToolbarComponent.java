@@ -9,8 +9,9 @@ import org.openqa.selenium.By;
 public class HeaderEditorToolbarComponent extends Base {
 
     private final By backButton = By.xpath("//android.widget.ImageButton[@content-desc='Open navigation drawer']");
-    private final By pinNoteButton = By.id("com.google.android.keep:id/menu_pin");
-
+    private final By pinButton = By.id("com.google.android.keep:id/menu_pin");
+    private final By reminderButton = By.id("com.google.android.keep:id/menu_reminder");
+    private final By archiveButton = By.id("com.google.android.keep:id/menu_archive");
 
     public HeaderEditorToolbarComponent(AppiumDriver driver) {
         super(driver);
@@ -19,4 +20,14 @@ public class HeaderEditorToolbarComponent extends Base {
     public void tapBackButton() {
         driver.findElement(backButton).click();
     }
+    public void tapPinButton() {
+        driver.findElement(pinButton).click();
+    }
+    public void tapReminderButton() {
+        driver.findElement(reminderButton).click();
+    }
+    public void tapArchiveButton() {
+        driver.findElement(archiveButton).click();
+    }
+
 }
