@@ -1,9 +1,6 @@
 package com.google.googlekeep.pages;
 
-import com.google.googlekeep.components.HeaderEditorToolbarComponent;
-import com.google.googlekeep.components.HeaderMainToolbarComponent;
-import com.google.googlekeep.components.PlusButtonComponent;
-import com.google.googlekeep.components.SearchInputComponent;
+import com.google.googlekeep.components.*;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class MainPage extends BaseNotePage {
-    private final AppiumDriver driver;
     private final PlusButtonComponent plusButton;
     private SearchInputComponent searchInput;
     private final HeaderMainToolbarComponent headerMainToolbarComponent;
@@ -22,9 +18,8 @@ public class MainPage extends BaseNotePage {
 
     public MainPage(AppiumDriver driver) {
         super(driver);
-        this.driver = driver;
-        plusButton = new PlusButtonComponent(driver);
-        headerMainToolbarComponent = new HeaderMainToolbarComponent(driver);
+        this.plusButton = new PlusButtonComponent(driver);
+        this.headerMainToolbarComponent = new HeaderMainToolbarComponent(driver);
     }
 
     public PlusButtonComponent tapAddButtonOnMain() {
