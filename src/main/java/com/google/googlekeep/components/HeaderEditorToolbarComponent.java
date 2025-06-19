@@ -6,15 +6,9 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
 public class HeaderEditorToolbarComponent extends Base {
-    private final By burgerButton = By.xpath("//android.widget.ImageButton[@content-desc=\"Open navigation drawer\"]");
+
 
     public HeaderEditorToolbarComponent(AppiumDriver driver) {
         super(driver);
     }
-
-    public LeftSideModal openBurgerButtonModal(){
-        driver.findElement(burgerButton).click();
-        return new LeftSideModal(driver);
-    }
-
 }
