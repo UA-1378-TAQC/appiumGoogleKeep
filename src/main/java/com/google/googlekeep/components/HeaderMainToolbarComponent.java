@@ -16,6 +16,8 @@ public class HeaderMainToolbarComponent extends Base {
 
     public HeaderMainToolbarComponent(AppiumDriver driver) {
         super(driver);
+        this.searchInputComponent = new SearchInputComponent(driver);
+        this.userProfileComponent = new UserProfileComponent(driver);
     }
 
     public LeftSideModal openBurgerButtonModal() {

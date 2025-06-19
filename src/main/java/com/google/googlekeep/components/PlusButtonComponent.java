@@ -11,8 +11,8 @@ public class PlusButtonComponent extends Base {
     private final By plusButton = By.id("com.google.android.keep:id/speed_dial_create_close_button");
     private final By textNoteButton = By.id("com.google.android.keep:id/new_note_button");
 
-    public PlusButtonComponent(AppiumDriver webDriver) {
-        super(webDriver);
+    public PlusButtonComponent(AppiumDriver driver) {
+        super(driver);
     }
 
     public PlusButtonComponent tapAddButton() {

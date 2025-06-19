@@ -1,7 +1,7 @@
 package com.google.googlekeep.pages;
 
+import com.google.googlekeep.Base;
 import com.google.googlekeep.components.*;
-import com.google.googlekeep.components.headerMainComponents.SearchInputComponent;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,7 +10,6 @@ import java.util.List;
 
 public class MainPage extends BaseNotePage {
     private final PlusButtonComponent plusButton;
-    private SearchInputComponent searchInput;
     private final HeaderMainToolbarComponent headerMainToolbarComponent;
 
     private final By cancelButton = By.id("android:id/button2");

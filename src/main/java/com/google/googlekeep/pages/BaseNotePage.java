@@ -27,7 +27,6 @@ public abstract class BaseNotePage extends Base {
         this.footerEditorToolbarComponent = new FooterEditorToolbarComponent(driver);
     }
 
-
     public BaseNotePage saveNote() {
         headerEditorToolbarComponent.tapBackButton();
         return this;
@@ -72,5 +71,8 @@ public abstract class BaseNotePage extends Base {
         return Character.isUpperCase(c) || "!?:\"_+=@#".indexOf(c) >= 0;
     }
 
-
+    public BaseNotePage archiveNote() {
+        headerEditorToolbarComponent.tapArchiveButton();
+        return this;
+    }
 }

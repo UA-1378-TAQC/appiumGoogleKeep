@@ -15,5 +15,9 @@ public class FooterEditorToolbarComponent extends Base {
 
     public FooterEditorToolbarComponent(AppiumDriver driver) {
         super(driver);
+        this.actionComponent = new ActionComponent(driver);
+        this.addComponent = new AddComponent(driver);
+        this.colorComponent = new ColorComponent(driver);
+        this.formatingComponent = new FormatingComponent(driver);
     }
 }

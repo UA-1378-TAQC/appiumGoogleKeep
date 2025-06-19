@@ -13,8 +13,8 @@ public class ListNotePage extends BaseNotePage {
     private final By addListItemButton = By.id("com.google.android.keep:id/list_footer_container");
     private final By allListItems = By.xpath("//android.widget.EditText[@resource-id='com.google.android.keep:id/description']");
 
-    public ListNotePage(AppiumDriver webDriver) {
-        super(webDriver);
+    public ListNotePage(AppiumDriver driver) {
+        super(driver);
     }
 
     public ListNotePage addListItem() {
