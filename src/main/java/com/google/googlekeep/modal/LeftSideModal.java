@@ -1,6 +1,7 @@
 package com.google.googlekeep.modal;
 
 import com.google.googlekeep.Base;
+import com.google.googlekeep.pages.ArchivePage;
 import com.google.googlekeep.pages.EditLabelsPage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
@@ -17,6 +18,11 @@ public class LeftSideModal extends Base {
     public EditLabelsPage tapCreateNewLabelButton(){
         driver.findElement(createNewLabelButton).click();
         return new EditLabelsPage(driver);
+    }
+
+    public ArchivePage tapArchiveButton(){
+        driver.findElement(archiveButton).click();
+        return new ArchivePage(driver);
     }
 
 }
