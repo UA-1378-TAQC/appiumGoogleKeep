@@ -1,12 +1,17 @@
 package com.google.googlekeep.modal;
 
 import com.google.googlekeep.Base;
+import com.google.googlekeep.pages.ArchivePage;
 import com.google.googlekeep.pages.EditLabelsPage;
+import com.google.googlekeep.pages.MainPage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
 public class LeftSideModal extends Base {
+    private final By notesButton = By.id("com.google.android.keep:id/drawer_navigation_active");
     private final By createNewLabelButton = By.xpath("//android.widget.TextView[@resource-id=\"com.google.android.keep:id/drawer_create_label_button\"]");
+    private final By archiveButton = By.id("com.google.android.keep:id/drawer_navigation_archive");
+
     public LeftSideModal(AppiumDriver driver) {
         super(driver);
     }
@@ -15,5 +20,16 @@ public class LeftSideModal extends Base {
         driver.findElement(createNewLabelButton).click();
         return new EditLabelsPage(driver);
     }
+
+    public ArchivePage tapArchiveButton(){
+        driver.findElement(archiveButton).click();
+        return new ArchivePage(driver);
+    }
+
+    public MainPage tapNotesButton(){
+        driver.findElement(notesButton).click();
+        return new MainPage(driver);
+    }
+
 
 }
