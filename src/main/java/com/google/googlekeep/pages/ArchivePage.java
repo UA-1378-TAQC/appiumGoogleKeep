@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ArchivePage extends BaseNotePage {
     private final By listOfNotesTitle = By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_title']");
-    private final By burgerButtonA = By.id("android.widget.ImageButton");
+    private final By burgerButtonA =By.xpath("//android.widget.ImageButton[@content-desc=\"Open navigation drawer\"]");
     private final By gotItButton = By.id("android:id/button1");
 
     public ArchivePage(AppiumDriver driver) {
@@ -23,7 +23,7 @@ public class ArchivePage extends BaseNotePage {
                 .findFirst()
                 .ifPresent(WebElement::click);
     }
-    public LeftSideModal tapBurgerButtonA() {
+    public LeftSideModal tapArchivedBurgerButton() {
         driver.findElement(burgerButtonA).click();
         return new LeftSideModal(driver);
     }

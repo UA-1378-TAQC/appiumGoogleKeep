@@ -40,22 +40,16 @@ public class UnarchiveNoteTest extends BaseTestRunner {
         archivePage.findArchivedNoteByTitle(title);
 
         archivePage.unarchiveNote().tapBachOnArchive();
-        archivePage.tapBurgerButtonA();
+        leftSideModal = archivePage.tapArchivedBurgerButton();
         leftSideModal.tapNotesButton();
         keep.findNotesTitle(title);
 
-
-
-
-        // Step 7: Verify unarchived note is now visible in the main list
         softAssert.assertTrue(keep.isNoteDisplayed(title),
                 "Unarchived note should be visible in the main notes list");
 
-        // Additional verification: Check that note body is also displayed
         softAssert.assertTrue(keep.isNoteBodyDisplayed(body),
                 "Unarchived note body should be visible in the main notes list");
 
-        // Collect all assertions
         softAssert.assertAll();
     }
 
