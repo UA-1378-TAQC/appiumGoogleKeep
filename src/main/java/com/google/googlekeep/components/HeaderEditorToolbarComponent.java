@@ -12,6 +12,7 @@ public class HeaderEditorToolbarComponent extends Base {
     private final By pinButton = By.id("com.google.android.keep:id/menu_pin");
     private final By reminderButton = By.id("com.google.android.keep:id/menu_reminder");
     private final By archiveButton = By.id("com.google.android.keep:id/menu_archive");
+    private final By unarchiveButton = By.id("com.google.android.keep:id/menu_unarchive");
 
     public HeaderEditorToolbarComponent(AppiumDriver driver) {
         super(driver);
@@ -29,5 +30,7 @@ public class HeaderEditorToolbarComponent extends Base {
     public void tapArchiveButton() {
         driver.findElement(archiveButton).click();
     }
-
+    public void tapUnarchiveButton() {
+        driver.findElement(unarchiveButton).click();
+    }
 }

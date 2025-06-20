@@ -2,6 +2,7 @@ package com.google.googlekeep.pages;
 
 import com.google.googlekeep.Base;
 import com.google.googlekeep.components.*;
+import com.google.googlekeep.modal.LeftSideModal;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -71,4 +72,8 @@ public class MainPage extends BaseNotePage {
         ).isEmpty();
     }
 
+    public MainPage goToLeftSideModal() {
+        headerMainToolbarComponent.openBurgerButtonModal();
+        return this;
+    }
 }
