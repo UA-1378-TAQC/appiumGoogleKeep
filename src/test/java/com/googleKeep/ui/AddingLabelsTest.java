@@ -1,6 +1,5 @@
 package com.googleKeep.ui;
 
-import com.google.googlekeep.components.FooterEditorToolbarComponent;
 import com.google.googlekeep.pages.CheckLabelsPage;
 import com.google.googlekeep.pages.EditLabelsPage;
 import com.google.googlekeep.pages.MainPage;
@@ -10,15 +9,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.lang.Thread.sleep;
+
 public class AddingLabelsTest extends BaseTestRunner {
 
     private MainPage mainPage;
-    private CheckLabelsPage checkLabelsPage;
-    private FooterEditorToolbarComponent footerEditorToolbarComponent;
 
     private final String[] labels = {"Label1", "Label2", "Label3"};
     private final String[] noteTitles = {"Note 1", "Note 2", "Note 3"};
-    private final String[] noteBodies = {"First note content", "Second note content", "Third note content"};
 
     @BeforeMethod
     public void setUpTestData() {
@@ -36,19 +38,16 @@ public class AddingLabelsTest extends BaseTestRunner {
         mainPage.tapAddButtonOnMain()
                 .createTextNote()
                 .enterTitle(noteTitles[0])
-                .enterBody(noteBodies[0])
                 .saveNote();
 
         mainPage.tapAddButtonOnMain()
                 .createTextNote()
                 .enterTitle(noteTitles[1])
-                .enterBody(noteBodies[1])
                 .saveNote();
 
         mainPage.tapAddButtonOnMain()
                 .createTextNote()
                 .enterTitle(noteTitles[2])
-                .enterBody(noteBodies[2])
                 .saveNote();
     }
 
@@ -84,7 +83,7 @@ public class AddingLabelsTest extends BaseTestRunner {
     }
 
     @AfterMethod
-    public void cleanUpTestData() {
+    public void cleanUpTestData() throws InterruptedException {
         for (String title : noteTitles) {
             mainPage.deleteNoteByTitle(title);
         }
@@ -93,14 +92,15 @@ public class AddingLabelsTest extends BaseTestRunner {
                 .openBurgerButtonModal()
                 .tapCreateNewLabelButton();
 
-        for (String label : labels) {
+        List<String> labelList = new ArrayList<>(Arrays.asList(labels));
+
+        for (String label : labelList) {
             if (editLabelsPage.waitForLabelToAppear(label)) {
                 editLabelsPage.deleteLabel(label);
+                sleep(1000);
             }
         }
 
-        mainPage.tapMenuBurgerButton()
-                .openBurgerButtonModal()
-                .tapNotesButton();
+        mainPage.tapMenuBurgerButton().openBurgerButtonModal();
     }
 }

@@ -86,8 +86,15 @@ public class MainPage extends BaseNotePage {
     }
 
     public boolean verifyLabelPresentOnNote(String noteTitle, String label) {
-        WebElement note = driver.findElement(By.xpath("//android.widget.TextView[@text='" + noteTitle + "']/../.."));
-        return note.getText().contains(label);
+        try {
+            WebElement noteContainer = driver.findElement(By.xpath(
+                    "//android.widget.TextView[@text='" + noteTitle + "']/ancestor::*[@resource-id='com.google.android.keep:id/browse_text_note']"
+            ));
+
+            return !noteContainer.findElements(By.xpath(".//android.widget.TextView[@text='" + label + "']")).isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void deleteNoteByTitle(String title) {

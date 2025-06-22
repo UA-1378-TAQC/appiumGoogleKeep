@@ -2,11 +2,18 @@ package com.google.googlekeep.pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class EditLabelsPage extends BaseNotePage {
     private final By createNewLabelField = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/input_text\"]");
     private final By submitButton = By.xpath("//android.widget.Button[@content-desc=\"OK\"]");
     private final By listOfLabels = By.xpath("//*[@resource-id=\"com.google.android.keep:id/label_name\"]");
+    private final By labelEntryContainer = By.id("com.google.android.keep:id/label_editor_entry_root");
+    private final By labelEditButton = By.id("com.google.android.keep:id/pencil");
+    private final By deleteLabelButton = By.xpath("//android.widget.Button[@content-desc='Delete label']");
+    private final By confirmDeleteButton = By.id("android:id/button1");
 
     public EditLabelsPage(AppiumDriver driver) {
         super(driver);
@@ -28,14 +35,28 @@ public class EditLabelsPage extends BaseNotePage {
     }
 
     public void deleteLabel(String labelName) {
-        By editButton = By.xpath("//android.widget.FrameLayout[android.widget.EditText[@text='" + labelName + "']]//android.widget.Button[@content-desc='Edit label']");
-        waitForElementToBeClickable(editButton).click();
+        System.out.println("Search for a block with a label:" + labelName);
+        List<WebElement> labelContainers = driver.findElements(labelEntryContainer);
 
-        By deleteButton = By.xpath("//android.widget.Button[@content-desc='Delete label']");
-        waitForElementToBeClickable(deleteButton).click();
+        for (WebElement container : labelContainers) {
+            try {
+                WebElement labelText = container.findElement(listOfLabels);
+                if (labelText.getText().equals(labelName)) {
+                    WebElement pencilButton = container.findElement(labelEditButton);
+                    pencilButton.click();
 
-        By confirmDelete = By.id("android:id/button1");
-        waitForDialogAndClick(confirmDelete);
+                    waitForElementToBeClickable(deleteLabelButton).click();
+                    waitForElementToBeClickable(confirmDeleteButton).click();
+
+                    System.out.println("✅ Label '" + labelName + "' deleted.");
+                    return;
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        System.out.println("❌ No label or icon found for: " + labelName);
+        throw new NoSuchElementException("Label not found: " + labelName);
     }
 
 }
