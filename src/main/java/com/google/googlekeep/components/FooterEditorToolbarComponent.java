@@ -6,6 +6,7 @@ import com.google.googlekeep.components.footerEditorComponents.AddComponent;
 import com.google.googlekeep.components.footerEditorComponents.ColorComponent;
 import com.google.googlekeep.components.footerEditorComponents.FormatingComponent;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.By;
 
 public class FooterEditorToolbarComponent extends Base {
     private ActionComponent actionComponent;
@@ -20,4 +21,11 @@ public class FooterEditorToolbarComponent extends Base {
         this.colorComponent = new ColorComponent(driver);
         this.formatingComponent = new FormatingComponent(driver);
     }
+
+    public ActionComponent openActionMenu() {
+        By menuButton = By.xpath("//android.widget.ImageButton[@content-desc='Action']");
+        driver.findElement(menuButton).click();
+        return actionComponent;
+    }
+
 }

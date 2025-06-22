@@ -21,6 +21,7 @@ public abstract class BaseNotePage extends Base {
     private final By tapOutside = By.xpath("//android.view.View[@resource-id=\"com.google.android.keep:id/touch_outside\"]");
     private final By titleField = By.id("com.google.android.keep:id/editable_title");
     private final By bodyField = By.id("com.google.android.keep:id/edit_note_text");
+    private final By menuButton = By.xpath("//android.widget.ImageButton[@content-desc='Action']");
 
     public BaseNotePage(AppiumDriver driver) {
         super(driver);
@@ -91,5 +92,9 @@ public abstract class BaseNotePage extends Base {
     public ArchivePage tapBachOnArchive() {
         headerEditorToolbarComponent.tapBackButton();
         return new ArchivePage(driver);
+    }
+
+    public FooterEditorToolbarComponent getFooterEditorToolbarComponent() {
+        return footerEditorToolbarComponent;
     }
 }

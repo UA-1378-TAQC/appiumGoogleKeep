@@ -27,4 +27,15 @@ public class EditLabelsPage extends BaseNotePage {
         return waitUntilTextAppearsInList(listOfLabels, labelName, 10);
     }
 
+    public void deleteLabel(String labelName) {
+        By editButton = By.xpath("//android.widget.FrameLayout[android.widget.EditText[@text='" + labelName + "']]//android.widget.Button[@content-desc='Edit label']");
+        waitForElementToBeClickable(editButton).click();
+
+        By deleteButton = By.xpath("//android.widget.Button[@content-desc='Delete label']");
+        waitForElementToBeClickable(deleteButton).click();
+
+        By confirmDelete = By.id("android:id/button1");
+        waitForDialogAndClick(confirmDelete);
+    }
+
 }
