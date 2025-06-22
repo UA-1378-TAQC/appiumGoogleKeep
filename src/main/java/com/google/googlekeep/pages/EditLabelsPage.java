@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.List;
 
 public class EditLabelsPage extends BaseNotePage {
     private final By createNewLabelField = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/input_text\"]");
@@ -59,6 +58,7 @@ public class EditLabelsPage extends BaseNotePage {
 
         System.out.println("❌ No label or icon found for: " + labelName);
         throw new NoSuchElementException("Label not found: " + labelName);
+    }
 
     public boolean isLabelPresent(String labelName) {
         List<WebElement> labels = driver.findElements(listOfLabels);
