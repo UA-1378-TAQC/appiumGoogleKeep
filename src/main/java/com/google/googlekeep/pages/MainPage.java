@@ -1,8 +1,7 @@
 package com.google.googlekeep.pages;
 
-import com.google.googlekeep.Base;
 import com.google.googlekeep.components.*;
-import com.google.googlekeep.modal.LeftSideModal;
+import com.google.googlekeep.components.footerEditorComponents.ActionComponent;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -75,5 +74,33 @@ public class MainPage extends BaseNotePage {
     public MainPage goToLeftSideModal() {
         headerMainToolbarComponent.openBurgerButtonModal();
         return this;
+    }
+
+    public ActionComponent actionComponentMenu() {
+        return new ActionComponent(driver);
+    }
+
+    public MainPage tapBackArrow() {
+        driver.findElement(By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
+        return this;
+    }
+
+    public boolean verifyLabelPresentOnNote(String noteTitle, String label) {
+        try {
+            WebElement noteContainer = driver.findElement(By.xpath(
+                    "//android.widget.TextView[@text='" + noteTitle + "']/ancestor::*[@resource-id='com.google.android.keep:id/browse_text_note']"
+            ));
+
+            return !noteContainer.findElements(By.xpath(".//android.widget.TextView[@text='" + label + "']")).isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void deleteNoteByTitle(String title) {
+        if (isNoteDisplayed(title)) {
+            findNotesTitle(title);
+            archiveNote();
+        }
     }
 }
