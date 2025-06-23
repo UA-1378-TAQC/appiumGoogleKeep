@@ -1,8 +1,8 @@
 package com.google.googlekeep.pages;
 
-import com.google.googlekeep.components.HeaderEditorToolbarComponent;
-import com.google.googlekeep.components.PlusButtonComponent;
-import com.google.googlekeep.components.SearchInputComponent;
+import com.google.googlekeep.Base;
+import com.google.googlekeep.components.*;
+import com.google.googlekeep.modal.LeftSideModal;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,10 +10,8 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 public class MainPage extends BaseNotePage {
-    private final AppiumDriver driver;
     private final PlusButtonComponent plusButton;
-    private SearchInputComponent searchInput;
-    private final HeaderEditorToolbarComponent headerEditorToolbarComponent;
+    private final HeaderMainToolbarComponent headerMainToolbarComponent;
 
     private final By cancelButton = By.id("android:id/button2");
     private final By listOfNotesTitle = By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_title']");
@@ -21,9 +19,8 @@ public class MainPage extends BaseNotePage {
 
     public MainPage(AppiumDriver driver) {
         super(driver);
-        this.driver = driver;
-        plusButton = new PlusButtonComponent(driver);
-        headerEditorToolbarComponent = new HeaderEditorToolbarComponent(driver);
+        this.plusButton = new PlusButtonComponent(driver);
+        this.headerMainToolbarComponent = new HeaderMainToolbarComponent(driver);
     }
 
     public PlusButtonComponent tapAddButtonOnMain() {
@@ -65,8 +62,8 @@ public class MainPage extends BaseNotePage {
         return !driver.findElements(By.xpath("//android.widget.TextView[@text='" + titleText + "']")).isEmpty();
     }
 
-    public HeaderEditorToolbarComponent tapMenuBurgerButton() {
-        return headerEditorToolbarComponent;
+    public HeaderMainToolbarComponent tapMenuBurgerButton() {
+        return headerMainToolbarComponent;
     }
 
     public boolean isNoteBodyDisplayed(String bodyText) {
@@ -75,4 +72,8 @@ public class MainPage extends BaseNotePage {
         ).isEmpty();
     }
 
+    public MainPage goToLeftSideModal() {
+        headerMainToolbarComponent.openBurgerButtonModal();
+        return this;
+    }
 }
