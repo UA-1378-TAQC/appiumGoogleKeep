@@ -10,7 +10,7 @@ public class SearchByKeywordsTest extends BaseTestRunner {
     String NOTE_NAME = "Test1";
 
     @Test
-    void SearchByKeywordTest() {
+    void searchByKeywordTest() {
         keep.tapMenuBurgerButton().openBurgerButtonModal()//questionable
                 .tapCreateNewLabelButton().createLabel(LABEL_NAME).exit();
 
