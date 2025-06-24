@@ -6,20 +6,21 @@ import org.testng.annotations.Test;
 
 public class SearchByKeywordsTest extends BaseTestRunner {
 
+    String LABEL_NAME = "Label1";
+    String NOTE_NAME = "Test1";
+
     @Test
-    void SearchByKeywordTest(){
-        keep.tapMenuBurgerButton()
-                .openBurgerButtonModal()//questionable
-                .tapCreateNewLabelButton()
-                .createLabel("Label1").exit();
+    void SearchByKeywordTest() {
+        keep.tapMenuBurgerButton().openBurgerButtonModal()//questionable
+                .tapCreateNewLabelButton().createLabel(LABEL_NAME).exit();
 
-        keep.tapMenuBurgerButton().openBurgerButtonModal().tapLabelButton("Label1").tapAddButtonOnMain().createTextNote().enterTitle("Test1").saveNote();
+        keep.tapMenuBurgerButton().openBurgerButtonModal().tapLabelButton(LABEL_NAME).tapAddButtonOnMain().createTextNote().enterTitle(NOTE_NAME).saveNote();
 
-        keep.tapMenuBurgerButton().openBurgerButtonModal().tapAllNotesButton().tapSearchLabel();
+        var searchMenu = keep.tapMenuBurgerButton().openBurgerButtonModal().tapAllNotesButton().tapSearchLabel().enterText(LABEL_NAME);
 
-        keep.tapMenuBurgerButton()
-                .openBurgerButtonModal()//questionable
-                .tapCreateNewLabelButton()
-                .deleteLabel("Label1").exit();
+        var names = searchMenu.getFoundedNames();
+        Assert.assertTrue(names.contains(NOTE_NAME));
+
+        searchMenu.exit();
     }
 }
