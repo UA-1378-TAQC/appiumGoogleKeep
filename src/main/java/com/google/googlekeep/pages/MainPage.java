@@ -5,7 +5,10 @@ import com.google.googlekeep.components.footerEditorComponents.ActionComponent;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class MainPage extends BaseNotePage {
@@ -15,6 +18,7 @@ public class MainPage extends BaseNotePage {
     private final By cancelButton = By.id("android:id/button2");
     private final By listOfNotesTitle = By.xpath("//android.widget.TextView[@resource-id='com.google.android.keep:id/index_note_title']");
     private final By skipWelcomeButton = By.id("com.google.android.keep:id/skip_welcome");
+
 
     public MainPage(AppiumDriver driver) {
         super(driver);
@@ -101,6 +105,15 @@ public class MainPage extends BaseNotePage {
         if (isNoteDisplayed(title)) {
             findNotesTitle(title);
             archiveNote();
+        }
+    }
+    public boolean waitForNoteToDisappear(String titleText) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//android.widget.TextView[@text='" + titleText + "']")));
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
