@@ -44,8 +44,15 @@ public abstract class Base {
         }
     }
 
-    protected boolean waitUntilTextAppearsInList(By locator, String expectedText) {
-        return waitUntilTextAppearsInList(locator, expectedText, 10);
+    public WebElement waitForElementToBeClickable(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public void waitForDialogAndClick(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
     protected void swipeFromElementToElement(WebElement fromElement, WebElement toElement){
