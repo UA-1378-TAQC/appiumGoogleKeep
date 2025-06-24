@@ -3,7 +3,6 @@ package com.google.googlekeep.modal;
 import com.google.googlekeep.Base;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;

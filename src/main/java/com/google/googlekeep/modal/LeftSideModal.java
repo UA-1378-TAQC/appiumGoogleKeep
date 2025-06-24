@@ -5,12 +5,8 @@ import com.google.googlekeep.pages.ArchivePage;
 import com.google.googlekeep.pages.EditLabelsPage;
 import com.google.googlekeep.pages.LabelNotesPage;
 import com.google.googlekeep.pages.MainPage;
-import com.sun.tools.javac.Main;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 public class LeftSideModal extends Base {
     private final By notesButton = By.id("com.google.android.keep:id/drawer_navigation_active");

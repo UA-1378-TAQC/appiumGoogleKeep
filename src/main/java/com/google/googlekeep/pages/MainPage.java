@@ -1,8 +1,6 @@
 package com.google.googlekeep.pages;
 
-import com.google.googlekeep.components.HeaderEditorToolbarComponent;
 import com.google.googlekeep.components.PlusButtonComponent;
-import com.google.googlekeep.components.SearchInputComponent;
 import com.google.googlekeep.modal.SearchModal;
 import com.google.googlekeep.components.*;
 import com.google.googlekeep.components.footerEditorComponents.ActionComponent;
