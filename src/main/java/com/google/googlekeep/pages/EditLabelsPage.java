@@ -4,9 +4,11 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class EditLabelsPage extends BaseNotePage {
+    private final By exitButton = By.xpath("""
+//android.widget.ImageButton[@content-desc="Open navigation drawer"]
+            """);
     private final By createNewLabelField = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/input_text\"]");
     private final By submitButton = By.xpath("//android.widget.Button[@content-desc=\"OK\"]");
     private final By listOfLabels = By.xpath("//*[@resource-id=\"com.google.android.keep:id/label_name\"]");
@@ -14,14 +16,29 @@ public class EditLabelsPage extends BaseNotePage {
     private final By labelEditButton = By.id("com.google.android.keep:id/pencil");
     private final By deleteLabelButton = By.xpath("//android.widget.Button[@content-desc='Delete label']");
     private final By confirmDeleteButton = By.id("android:id/button1");
+    private final By deleteSubmitButton = By.xpath("""
+//android.widget.Button[@resource-id="android:id/button1"]
+            """);
+    private By editButton(String labelName){
+       return
+               By.xpath(String.format("""
+//android.widget.EditText[@resource-id="com.google.android.keep:id/label_name" and @text="%s"]/../..//android.widget.Button[@content-desc="Edit label"]
+                       """,labelName));
+    }
+
+    private By deleteButton(String labelName){
+        return
+                By.xpath(String.format("""
+//android.widget.EditText[@resource-id="com.google.android.keep:id/label_name" and @text="%s"]/../..//android.widget.Button[@content-desc="Delete label"] 
+                       """,labelName));
+    }
 
     public EditLabelsPage(AppiumDriver driver) {
         super(driver);
     }
 
     public EditLabelsPage enterNewLabelName(String labelName) {
-        driver.findElement(createNewLabelField).click();
-        enterText(labelName);
+        driver.findElement(createNewLabelField).sendKeys(labelName);
         return this;
     }
 
@@ -30,35 +47,28 @@ public class EditLabelsPage extends BaseNotePage {
         return this;
     }
 
+    public EditLabelsPage clickEditButton(String labelName){
+        driver.findElement(editButton(labelName)).click();
+        return this;
+    }
+
+    public EditLabelsPage clickDeleteButton(String labelName){
+        driver.findElement(deleteButton(labelName)).click();
+        return this;
+    }
+
+    public EditLabelsPage submitDelete(){
+        driver.findElement(deleteSubmitButton).click();
+        return this;
+    }
+
+    public boolean isLabelCreated(String labelName) {
+        return waitUntilTextAppearsInList(listOfLabels, labelName, 10);
+    }
     public boolean waitForLabelToAppear(String labelName) {
         return waitUntilTextAppearsInList(listOfLabels, labelName, 10);
     }
 
-
-    public void deleteLabel(String labelName) {
-        System.out.println("Search for a block with a label:" + labelName);
-        List<WebElement> labelContainers = driver.findElements(labelEntryContainer);
-
-        for (WebElement container : labelContainers) {
-            try {
-                WebElement labelText = container.findElement(listOfLabels);
-                if (labelText.getText().equals(labelName)) {
-                    WebElement pencilButton = container.findElement(labelEditButton);
-                    pencilButton.click();
-
-                    waitForElementToBeClickable(deleteLabelButton).click();
-                    waitForElementToBeClickable(confirmDeleteButton).click();
-
-                    System.out.println("✅ Label '" + labelName + "' deleted.");
-                    return;
-                }
-            } catch (Exception ignored) {
-            }
-        }
-
-        System.out.println("❌ No label or icon found for: " + labelName);
-        throw new NoSuchElementException("Label not found: " + labelName);
-    }
 
     public boolean isLabelPresent(String labelName) {
         List<WebElement> labels = driver.findElements(listOfLabels);
@@ -69,5 +79,18 @@ public class EditLabelsPage extends BaseNotePage {
         }
         return false;
 
+    }
+    public EditLabelsPage createLabel(String labelName){
+        enterNewLabelName(labelName).clickSubmit();
+        return this;
+    }
+
+    public EditLabelsPage deleteLabel(String labelName){
+        clickEditButton(labelName).clickDeleteButton(labelName).submitDelete();
+        return this;
+    }
+
+    public void exit(){
+        driver.findElement(exitButton).click();
     }
 }

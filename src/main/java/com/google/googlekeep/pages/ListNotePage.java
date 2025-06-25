@@ -12,6 +12,7 @@ public class ListNotePage extends BaseNotePage {
     private final By listOptionsButton = By.id("com.google.android.keep:id/list_actions");
     private final By addListItemButton = By.id("com.google.android.keep:id/list_footer_container");
     private final By allListItems = By.xpath("//android.widget.EditText[@resource-id='com.google.android.keep:id/description']");
+    private final By allGrabbers = By.id("com.google.android.keep:id/grabber");
 
     public ListNotePage(AppiumDriver driver) {
         super(driver);
@@ -29,6 +30,13 @@ public class ListNotePage extends BaseNotePage {
             activeInput.click();
             enterText(itemText);
         }
+        return this;
+    }
+
+    public ListNotePage reorderElements(int fromIndex, int toIndex) {
+        List<WebElement> inputs = driver.findElements(allGrabbers);
+        swipeFromElementToElement(inputs.get(fromIndex),inputs.get(toIndex));
+
         return this;
     }
 
