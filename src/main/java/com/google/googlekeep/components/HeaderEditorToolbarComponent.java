@@ -14,7 +14,6 @@ public class HeaderEditorToolbarComponent extends Base {
     private final By reminderButton = By.id("com.google.android.keep:id/menu_reminder");
     private final By archiveButton = By.id("com.google.android.keep:id/menu_archive");
     private final By unarchiveButton = By.id("com.google.android.keep:id/menu_unarchive");
-    private final By completeButton = By.id("");
 
     public HeaderEditorToolbarComponent(AppiumDriver driver) {
         super(driver);
