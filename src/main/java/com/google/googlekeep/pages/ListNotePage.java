@@ -12,7 +12,9 @@ public class ListNotePage extends BaseNotePage {
     private final By listOptionsButton = By.id("com.google.android.keep:id/list_actions");
     private final By addListItemButton = By.id("com.google.android.keep:id/list_footer_container");
     private final By allListItems = By.xpath("//android.widget.EditText[@resource-id='com.google.android.keep:id/description']");
-
+    private final By markItem = By.xpath("(//android.widget.CheckBox[@resource-id=\"com.google.android.keep:id/checkbox\"])[1]");
+    private final By markedItem = By.xpath("//android.widget.CheckBox[@resource-id=\"com.google.android.keep:id/checkbox\"])[3]");
+    private final By markedData = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/description\" and @text=\"Test1\"]");
     public ListNotePage(AppiumDriver driver) {
         super(driver);
     }
@@ -44,4 +46,14 @@ public class ListNotePage extends BaseNotePage {
         return "";
     }
 
+    public void markItemInCheckList()
+    {
+        driver.findElement(markItem).click();
+    }
+
+    public String getMarkedData()
+    {
+        List<WebElement> items = driver.findElements(allListItems);
+        return items.get(2).getText();
+    }
 }
