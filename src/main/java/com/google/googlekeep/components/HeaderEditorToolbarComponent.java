@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class HeaderEditorToolbarComponent extends Base {
 
-    private final By backButton = By.xpath("//android.widget.ImageButton[@content-desc=\"Перейти вгору\"]");
+    private final By backButton = By.xpath("//android.widget.ImageButton[@content-desc='Open navigation drawer']");
     private final By pinButton = By.id("com.google.android.keep:id/menu_pin");
     private final By reminderButton = By.id("com.google.android.keep:id/menu_reminder");
     private final By archiveButton = By.id("com.google.android.keep:id/menu_archive");
