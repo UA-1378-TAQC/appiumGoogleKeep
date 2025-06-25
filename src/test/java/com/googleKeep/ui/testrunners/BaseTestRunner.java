@@ -28,7 +28,8 @@ public class BaseTestRunner {
                     .setDeviceName(testValueProvider.getDeviceName())
                     .setAutomationName(testValueProvider.getAutomationName())
                     .setAppPackage(testValueProvider.getAppPackage())
-                    .setAppActivity(testValueProvider.getAppActivity());
+                    .setAppActivity(testValueProvider.getAppActivity())
+                    .setAutoGrantPermissions(true);
 
             String appiumServerURL = testValueProvider.getAppiumServerURL();
             System.out.println("Appium server URL: " + appiumServerURL);

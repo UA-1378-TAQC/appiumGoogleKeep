@@ -27,6 +27,7 @@ public abstract class BaseNotePage extends Base {
     private final By menuButton = By.xpath("//android.widget.ImageButton[@content-desc='Action']");
     private final By colorPaletteButton = By.xpath("//android.widget.ImageButton[@content-desc=\"Варіанти фону\"]");
     private final By orangeColorOption = By.xpath("//android.widget.FrameLayout[@content-desc=\"Колір: Персик\"]");
+    private final By deleteButton = By.xpath("//android.widget.TextView[@resource-id=\"com.google.android.keep:id/menu_text\" and @text=\"Видалити\"]");
 
     public BaseNotePage(AppiumDriver driver) {
         super(driver);
@@ -115,6 +116,12 @@ public abstract class BaseNotePage extends Base {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(tapOutside)).click();
         return this;
+    }
+
+    public MainPage deleteNote(){
+        driver.findElement(menuButton).click();
+        driver.findElement(deleteButton).click();
+        return new MainPage(driver);
     }
 
     public FooterEditorToolbarComponent getFooterEditorToolbarComponent() {

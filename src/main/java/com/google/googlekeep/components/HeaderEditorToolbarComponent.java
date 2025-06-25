@@ -1,8 +1,6 @@
 package com.google.googlekeep.components;
 
 import com.google.googlekeep.Base;
-import com.google.googlekeep.modal.LeftSideModal;
-import com.google.googlekeep.pages.BaseNotePage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
