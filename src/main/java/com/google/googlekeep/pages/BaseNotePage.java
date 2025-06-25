@@ -5,13 +5,19 @@ import com.google.googlekeep.components.FooterEditorToolbarComponent;
 import com.google.googlekeep.components.HeaderEditorToolbarComponent;
 import com.google.googlekeep.modal.LeftSideModal;
 import com.google.googlekeep.utils.TextUtil;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
+
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import io.appium.java_client.android.nativekey.KeyEventMetaModifier;
+import lombok.ToString;
 
 public abstract class BaseNotePage extends Base {
 
@@ -22,6 +28,8 @@ public abstract class BaseNotePage extends Base {
     private final By titleField = By.id("com.google.android.keep:id/editable_title");
     private final By bodyField = By.id("com.google.android.keep:id/edit_note_text");
     private final By menuButton = By.xpath("//android.widget.ImageButton[@content-desc='Action']");
+    private final By pinButton = By.id("com.google.android.keep:id/menu_pin");
+    private final By isPinned = By.xpath("//android.widget.TextView[@resource-id=\"com.google.android.keep:id/header_text\" and @text=\"Pinned\"]");
 
     public BaseNotePage(AppiumDriver driver) {
         super(driver);
@@ -45,6 +53,19 @@ public abstract class BaseNotePage extends Base {
         enterText(body);
         return this;
     }
+
+    public BaseNotePage PinANote()
+    {
+        driver.findElement(pinButton).click();
+        return this;
+    }
+
+    public String IsPinned()
+    {
+        List<WebElement> items = driver.findElements(isPinned);
+        return items.get(0).getText();
+    }
+
 
     public BaseNotePage enterText(String body) {
         AndroidDriver driver = (AndroidDriver) this.driver;
