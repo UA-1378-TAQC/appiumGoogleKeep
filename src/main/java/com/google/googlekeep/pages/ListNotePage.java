@@ -15,6 +15,9 @@ public class ListNotePage extends BaseNotePage {
     private final By markItem = By.xpath("(//android.widget.CheckBox[@resource-id=\"com.google.android.keep:id/checkbox\"])[1]");
     private final By markedItem = By.xpath("//android.widget.CheckBox[@resource-id=\"com.google.android.keep:id/checkbox\"])[3]");
     private final By markedData = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/description\" and @text=\"Test1\"]");
+    private final By allGrabbers = By.id("com.google.android.keep:id/grabber");
+
+
     public ListNotePage(AppiumDriver driver) {
         super(driver);
     }
@@ -31,6 +34,13 @@ public class ListNotePage extends BaseNotePage {
             activeInput.click();
             enterText(itemText);
         }
+        return this;
+    }
+
+    public ListNotePage reorderElements(int fromIndex, int toIndex) {
+        List<WebElement> inputs = driver.findElements(allGrabbers);
+        swipeFromElementToElement(inputs.get(fromIndex),inputs.get(toIndex));
+
         return this;
     }
 
