@@ -1,13 +1,14 @@
 package com.googleKeep.ui;
 
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import com.google.googlekeep.components.HeaderEditorToolbarComponent;
 import com.google.googlekeep.modal.LeftSideModal;
 import com.google.googlekeep.pages.ArchivePage;
 import com.google.googlekeep.pages.MainPage;
 import com.googleKeep.ui.testrunners.BaseTestRunner;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class UnarchiveNoteTest extends BaseTestRunner {
     String title = "Archive Note Title";
@@ -52,6 +53,4 @@ public class UnarchiveNoteTest extends BaseTestRunner {
 
         softAssert.assertAll();
     }
-
-
 }

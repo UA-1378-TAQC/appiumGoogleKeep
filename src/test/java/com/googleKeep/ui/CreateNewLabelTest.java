@@ -21,5 +21,4 @@ public class CreateNewLabelTest extends BaseTestRunner {
 
         Assert.assertTrue(isLabelFound, "Label with title not found!");
     }
-
 }

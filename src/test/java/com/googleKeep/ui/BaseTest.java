@@ -11,5 +11,4 @@ public class BaseTest extends BaseTestRunner {
         //checks weather this project can connect to your device
         Assert.assertNotNull(driver, "Driver should be initialized");
     }
-
 }
