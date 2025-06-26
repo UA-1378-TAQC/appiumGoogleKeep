@@ -14,6 +14,7 @@ public class HeaderMainToolbarComponent extends Base {
     private final By burgerButton = By.xpath("//android.widget.ImageButton[@content-desc='Open navigation drawer']");
     private final By switchViewButton = By.id("com.google.android.keep:id/menu_switch_to_list_view");
 
+    
     public HeaderMainToolbarComponent(AppiumDriver driver) {
         super(driver);
     }

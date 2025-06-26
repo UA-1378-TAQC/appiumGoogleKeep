@@ -18,6 +18,9 @@ import org.openqa.selenium.WebElement;
 
 import io.appium.java_client.android.nativekey.KeyEventMetaModifier;
 import lombok.ToString;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public abstract class BaseNotePage extends Base {
 
@@ -30,6 +33,9 @@ public abstract class BaseNotePage extends Base {
     private final By menuButton = By.xpath("//android.widget.ImageButton[@content-desc='Action']");
     private final By pinButton = By.id("com.google.android.keep:id/menu_pin");
     private final By isPinned = By.xpath("//android.widget.TextView[@resource-id=\"com.google.android.keep:id/header_text\" and @text=\"Pinned\"]");
+    private final By colorPaletteButton = By.xpath("//android.widget.ImageButton[@content-desc=\"Варіанти фону\"]");
+    private final By orangeColorOption = By.xpath("//android.widget.FrameLayout[@content-desc=\"Колір: Персик\"]");
+    private final By deleteButton = By.xpath("//android.widget.TextView[@resource-id=\"com.google.android.keep:id/menu_text\" and @text=\"Видалити\"]");
 
     public BaseNotePage(AppiumDriver driver) {
         super(driver);
@@ -37,9 +43,9 @@ public abstract class BaseNotePage extends Base {
         this.footerEditorToolbarComponent = new FooterEditorToolbarComponent(driver);
     }
 
-    public BaseNotePage saveNote() {
+    public MainPage saveNote() {
         headerEditorToolbarComponent.tapBackButton();
-        return this;
+        return new MainPage(driver);
     }
 
     public BaseNotePage enterTitle(String title) {
@@ -113,6 +119,30 @@ public abstract class BaseNotePage extends Base {
     public ArchivePage tapBachOnArchive() {
         headerEditorToolbarComponent.tapBackButton();
         return new ArchivePage(driver);
+    }
+
+    public BaseNotePage openColorPalette() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(colorPaletteButton)).click();
+        return this;
+    }
+
+    public BaseNotePage selectOrangeColor() {
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(orangeColorOption)).click();
+        return this;
+    }
+
+    public BaseNotePage tapOutsideToClosePalette() {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.visibilityOfElementLocated(tapOutside)).click();
+        return this;
+    }
+
+    public MainPage deleteNote(){
+        driver.findElement(menuButton).click();
+        driver.findElement(deleteButton).click();
+        return new MainPage(driver);
     }
 
     public FooterEditorToolbarComponent getFooterEditorToolbarComponent() {

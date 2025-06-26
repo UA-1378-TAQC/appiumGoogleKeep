@@ -3,7 +3,6 @@ package com.googleKeep.ui;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.google.googlekeep.pages.ListNotePage;
 import com.google.googlekeep.pages.MainPage;
 import com.googleKeep.ui.testrunners.BaseTestRunner;
 
