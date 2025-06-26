@@ -17,7 +17,6 @@ public class ListNotePage extends BaseNotePage {
     private final By markedData = By.xpath("//android.widget.EditText[@resource-id=\"com.google.android.keep:id/description\" and @text=\"Test1\"]");
     private final By allGrabbers = By.id("com.google.android.keep:id/grabber");
 
-
     public ListNotePage(AppiumDriver driver) {
         super(driver);
     }
